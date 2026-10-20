@@ -1,0 +1,4 @@
+# Scripts exécutés sous Linux dans le conteneur : toujours en LF
+* text=auto eol=lf
+*.png binary
+*.woff2 binary

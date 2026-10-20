@@ -1,0 +1,152 @@
+/*
+ * Thème vidiSI pour Frappe LMS.
+ * Chargé uniquement sur les pages /lms, après le CSS de LMS.
+ * Ne touche qu'à l'apparence : aucune donnée ni comportement n'est modifié.
+ *
+ * Couleurs du logo :
+ *   bleu marine  #2B3480
+ *   vert d'eau   #6CBCA0
+ */
+
+/* ---------- Police des titres (Poppins, hébergée localement) ---------- */
+
+@font-face {
+	font-family: 'Poppins';
+	font-weight: 500;
+	font-display: swap;
+	src: url('../fonts/poppins-latin-500.woff2') format('woff2');
+}
+@font-face {
+	font-family: 'Poppins';
+	font-weight: 600;
+	font-display: swap;
+	src: url('../fonts/poppins-latin-600.woff2') format('woff2');
+}
+@font-face {
+	font-family: 'Poppins';
+	font-weight: 700;
+	font-display: swap;
+	src: url('../fonts/poppins-latin-700.woff2') format('woff2');
+}
+
+/* ---------- Couleurs ---------- */
+
+:root,
+[data-theme='light'] {
+	--vidisi-navy: #2b3480;
+	--vidisi-navy-hover: #232b6e;
+	--vidisi-navy-active: #1c2259;
+	--vidisi-navy-tint: #eceef7;
+	--vidisi-green: #6cbca0;
+	--vidisi-green-tint: #e7f5f0;
+	--vidisi-font-heading: 'Poppins', InterVar, ui-sans-serif, system-ui, sans-serif;
+
+	/* Boutons principaux (variant solid) et barres de progression */
+	--surface-gray-10: var(--vidisi-navy);
+	--surface-gray-9: var(--vidisi-navy-hover);
+
+	/* Liens */
+	--ink-blue-link: var(--vidisi-navy);
+}
+
+[data-theme='dark'] {
+	/* En mode sombre, le vert ressort mieux que le bleu marine */
+	--vidisi-navy: #6cbca0;
+	--vidisi-navy-hover: #85c9b2;
+	--vidisi-navy-active: #9dd4c2;
+	--vidisi-navy-tint: rgb(108 188 160 / 0.14);
+	--vidisi-green: #6cbca0;
+	--vidisi-green-tint: rgb(108 188 160 / 0.14);
+
+	--surface-gray-10: var(--vidisi-navy);
+	--surface-gray-9: var(--vidisi-navy-hover);
+	--ink-blue-link: var(--vidisi-navy);
+}
+
+/* ---------- Titres ---------- */
+
+#app h1,
+#app h2,
+#app h3,
+#app .text-2xl.font-semibold {
+	font-family: var(--vidisi-font-heading);
+	letter-spacing: -0.01em;
+}
+
+/* ---------- Boutons ---------- */
+
+/* Boutons principaux : texte plus marqué, plus faciles à repérer */
+#app button.bg-surface-gray-10,
+#app a.bg-surface-gray-10 {
+	font-weight: 600;
+	box-shadow: 0 1px 2px rgb(43 52 128 / 0.25);
+}
+#app button.bg-surface-gray-10:active,
+#app a.bg-surface-gray-10:active {
+	background-color: var(--vidisi-navy-active);
+}
+
+/*
+ * "Suivant" dans les leçons : c'est l'action principale de l'étudiant,
+ * on l'affiche comme un bouton principal (texte + chevron à droite).
+ */
+#app button:has(> span.truncate):has(> span.lucide-chevron-right:last-child) {
+	background-color: var(--vidisi-navy);
+	color: var(--ink-base, #fff);
+	font-weight: 600;
+	box-shadow: 0 1px 2px rgb(43 52 128 / 0.25);
+}
+#app button:has(> span.truncate):has(> span.lucide-chevron-right:last-child):hover {
+	background-color: var(--vidisi-navy-hover);
+}
+
+/* Focus clavier bien visible sur tous les boutons et liens */
+#app button:focus-visible,
+#app a:focus-visible {
+	outline: 2px solid var(--vidisi-green);
+	outline-offset: 2px;
+}
+
+/* ---------- Menu latéral ---------- */
+
+/* Page courante : fond teinté, texte bleu et repère vert à gauche */
+#app [data-slot='sidebar-item']:has(a[aria-current='page']) {
+	background-color: var(--vidisi-navy-tint);
+	color: var(--vidisi-navy);
+	box-shadow: inset 3px 0 0 var(--vidisi-green);
+	font-weight: 500;
+}
+#app [data-slot='sidebar-item']:has(a[aria-current='page']) svg {
+	color: var(--vidisi-navy);
+}
+
+/* ---------- Cartes de cours ---------- */
+
+#app .isolate.rounded-5:has(a[class~='after:inset-0']) {
+	transition:
+		transform 0.15s ease,
+		box-shadow 0.15s ease;
+}
+#app .isolate.rounded-5:has(a[class~='after:inset-0']):hover {
+	transform: translateY(-2px);
+	box-shadow: 0 8px 24px rgb(43 52 128 / 0.12);
+}
+#app .isolate.rounded-5:has(a[class~='after:inset-0']):hover a[class~='after:inset-0'] {
+	color: var(--vidisi-navy);
+}
+
+/* ---------- Progression ---------- */
+
+/* Barre de progression des cours en vert vidi */
+#app .bg-surface-gray-3.rounded-full > .bg-surface-gray-10.rounded-full {
+	background-color: var(--vidisi-green);
+}
+
+@media (prefers-reduced-motion: reduce) {
+	#app .isolate.rounded-5:has(a[class~='after:inset-0']) {
+		transition: none;
+	}
+	#app .isolate.rounded-5:has(a[class~='after:inset-0']):hover {
+		transform: none;
+	}
+}
